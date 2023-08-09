@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+void leapSort(int arr[], int n, int leap) {
+    for (int i = 0; i < n; i += leap) {
+        for (int j = i + leap; j < n; j += leap) {
+            if (arr[j] < arr[i]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {42, 8, 17, 3, 25, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int leap = 2; // Set the leap value
+
+    leapSort(arr, n, leap);
+
+    printf("Sorted array using Leap Sort: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
