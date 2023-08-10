@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Define the structure for the stack using a linked list
+struct Stack {
+    struct Node* top;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (!newNode) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to initialize a stack
+struct Stack* createStack() {
+    struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+    if (!stack) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    stack->top = NULL;
+    return stack;
+}
+
+// Function to push an element onto the stack
+void push(struct Stack* stack, int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = stack->top;
+    stack->top = newNode;
+    printf("%d pushed to stack.\n", data);
+}
+
+// Function to pop an element from the stack
+int pop(struct Stack* stack) {
+    if (stack->top == NULL) {
+        printf("Stack is empty!\n");
+        exit(1);
+    }
+    struct Node* temp = stack->top;
+    int poppedValue = temp->data;
+    stack->top = temp->next;
+    free(temp);
+    return poppedValue;
+}
+
+// Function to check if the stack is empty
+int isEmpty(struct Stack* stack) {
+    return (stack->top == NULL);
+}
+
+// Function to print the elements in the stack
+void printStack(struct Stack* stack) {
+    struct Node* current = stack->top;
+    printf("Stack: ");
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Stack* stack = createStack();
+
+    push(stack, 10);
+    push(stack, 20);
+    push(stack, 30);
+
+    printStack(stack);
+
+    printf("Popped: %d\n", pop(stack));
+    printf("Popped: %d\n", pop(stack));
+
+    printStack(stack);
+
+    return 0;
+}
